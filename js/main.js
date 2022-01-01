@@ -48,7 +48,7 @@ FormButton.addEventListener('click', e => {
         newSpan.classList.add('loader');
         buttonEl.appendChild(newSpan);
         const response = await fetch(
-          'http://127.0.0.1:8000/api/shorten',
+          'http://frda.me/api/shorten',
           {
             method: 'POST',
             mode: 'cors',
