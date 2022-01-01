@@ -5,12 +5,13 @@ FormButton.addEventListener('click', e => {
     const aliasInputField = document.querySelector('#alias'); 
     const textInput = document.querySelector('.newsletterForm input');
     const errorEl = document.querySelector('.error_isActiveText');
+    const errorSV = document.querySelector('.server_error_isActiveText')
     const errorUl = document.querySelector('.url_error_isActiveText');
     const success = document.querySelector('.success_isActiveText');
-    validate(FormButton, aliasInputField, textInput, errorEl, errorUl, success);
+    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success);
   });
 
-  const validate = async (buttonEl, aliasInput, inputField, errorField, errorFieldAlias, successField) => {
+  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField) => {
     const re = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
     const base_url = "https://frda.me/"
     if (inputField.value.length == 0) {
@@ -32,13 +33,15 @@ FormButton.addEventListener('click', e => {
         errorField.style.display = 'none';
       }, 3000);
     } else {
-
+      
       let _data = {
         original_url: inputField.value,
         short_url: aliasInput.value,
       }
-
+      
       try {
+        errorSV.style.display = 'none';
+        successField.style.display = 'none'
         buttonEl.innerHTML = '';
         buttonEl.style.display = 'flex';
         buttonEl.style.justifyContent = 'center';
@@ -60,27 +63,31 @@ FormButton.addEventListener('click', e => {
         );
         if (response.status == 500) {
           inputField.classList.add('error_active');
-          errorField.innerHTML = 'Server internal error, contact admin and try again';
-          errorField.style.display = 'block';
+          errorSV.style.display = 'block';
           setTimeout(() => {
             inputField.classList.remove('error_active');
             errorField.innerHTML = '';
             errorField.style.display = 'none';
             newSpan.classList.remove('loader');
-            buttonEl.appendChild(newSpan);
             buttonEl.disabled = false;
-          }, 3000);
+            buttonEl.innerHTML = 'Perform another Faraday Magic';
+          }, 5000);
         } else if (response.status == 201) {
+
+          // Storing data in form of JSON
+          var returned_data = await response.json();
+          console.log(returned_data);
+
           // inputField.value = '';
           successField.style.display = 'block'
-          let r_link = `${response.original_url}`
+          let r_link = returned_data.short_url
           let result = $('#success_isActiveText a');
           full_url = base_url + r_link
           result.attr('href', full_url)
           result.text(full_url)
           newSpan.classList.remove('loader');
-          buttonEl.appendChild(newSpan);
           buttonEl.disabled = false;
+          buttonEl.innerHTML = 'Perform another Faraday Magic';
         }
       } catch (e) {
         console.log(e)

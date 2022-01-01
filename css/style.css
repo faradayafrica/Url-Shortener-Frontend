@@ -205,17 +205,23 @@ body {
   }
 
   .success_isActiveText a {
+    text-align: center;
     color: #463079;
     font-weight: bold;
     text-decoration: none;
   }
 
   .success_isActiveText button {
-    margin-top: 1%;
-    margin-left: 2%;
+    margin-top: 2%;
   }
   
   .error_isActiveText {
+    text-align: center;
+    color: #ff5b5b !important;
+  }
+
+  .server_error_isActiveText {
+    margin-top: 2%;
     text-align: center;
     color: #ff5b5b !important;
   }
