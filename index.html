@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Link shortener for Faraday Africa">
+
+        <title>Frda.me | Wicked fast link shortener</title>
+        
+        <!-- Bootstrap CSS-->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- Font Awesome CSS-->
+        <link rel="stylesheet" href="fa/css/all.min.css">
+        <!-- Custom stylesheet -->
+        <link rel="stylesheet" href="css/style.css">
+
+        <!-- Favicon-->
+        <link rel="shortcut icon" href="img/favicon.png">
+    </head>
+    <body>
+
+        <section class="top-header">
+
+            <div class="container-fluid ">
+                <div class="row align-items-center">
+                    <div class="col-lg-12 col-md-10 col-sm-12 order-2 order-lg-1">
+                        <div class="form-group">
+
+                            <h1 style="text-align: center; color: white;">Faraday Link Shortener</h1>
+                            <p style="text-align: center; color: white;">Short and wicked fast link shortener</p>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Form -->
+        <section id="newsletter" class="newsletter">
+
+            <div class="container-fluid ">
+                <div class="row align-items-center">
+                    <div class="form-holder col-lg-12 col-md-10 col-sm-12 order-2 order-lg-1">
+                        <form class="newsletterForm">
+
+                            <div class="form-group">
+
+                                <input type="text" name="email" id="email" placeholder="Original link (https://google.com/search?=what+is+a+link+shortener)">
+                                <div class="error_isActiveText" style="display: none;"></div>
+                                
+                                <input id="alias" class="alias" type="text" name="name" placeholder="Optional unique name (https://frda.me/unique-name)">
+                                <div class="url_error_isActiveText" style="display: none;"></div>
+                                
+                                <button id="submitButton" class="btn btn-success submitbutton submit">Shorten link</button>
+                                
+                                <div id="success_isActiveText" class="success_isActiveText" style="display: none;"><a target="_BLANK" href="">Hi divaaaaa</a></div>
+
+                                </div>
+
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="footer">
+            <div class="col-md-12 text-white" style="text-align: center; font-size: 12px;">
+                <p>Faraday 2022. All Rights Reserved</p>
+            </div>
+        </section>
+
+        <script src="js/main.js"></script>
+        <script src="js/jquery-3.6.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>
