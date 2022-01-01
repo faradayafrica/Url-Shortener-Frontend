@@ -48,7 +48,7 @@ FormButton.addEventListener('click', e => {
         newSpan.classList.add('loader');
         buttonEl.appendChild(newSpan);
         const response = await fetch(
-          'http://frda.me/api/shorten',
+          'https://frda.me/api/shorten',
           {
             method: 'POST',
             mode: 'cors',
@@ -66,6 +66,9 @@ FormButton.addEventListener('click', e => {
             inputField.classList.remove('error_active');
             errorField.innerHTML = '';
             errorField.style.display = 'none';
+            newSpan.classList.remove('loader');
+            buttonEl.appendChild(newSpan);
+            buttonEl.disabled = false;
           }, 3000);
         } else if (response.status == 201) {
           // inputField.value = '';
@@ -78,7 +81,6 @@ FormButton.addEventListener('click', e => {
           newSpan.classList.remove('loader');
           buttonEl.appendChild(newSpan);
           buttonEl.disabled = false;
-          console.log(aliasInput.value)
         }
       } catch (e) {
         console.log(e)
