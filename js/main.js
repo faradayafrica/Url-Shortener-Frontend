@@ -33,10 +33,17 @@ FormButton.addEventListener('click', e => {
         errorField.style.display = 'none';
       }, 3000);
     } else {
-      
-      let _data = {
-        original_url: inputField.value,
-        short_url: aliasInput.value,
+
+      if ( aliasInput.value == null ) {
+        _data = {
+          original_url: inputField.value,
+        }
+        
+      } else if ( aliasInput.value != " " ) {
+         _data = {
+          original_url: inputField.value,
+          short_url: aliasInput.value,
+        }
       }
       
       try {
@@ -50,6 +57,8 @@ FormButton.addEventListener('click', e => {
         buttonEl.disabled = true;
         newSpan.classList.add('loader');
         buttonEl.appendChild(newSpan);
+
+
         const response = await fetch(
           'https://frda.me/api/shorten',
           {
@@ -58,21 +67,29 @@ FormButton.addEventListener('click', e => {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(_data),
+            body: JSON.stringify({original_url : inputField.value, short_url : aliasInput}),
           }
         );
+
+
         if (response.status == 500) {
-          inputField.classList.add('error_active');
           errorSV.style.display = 'block';
-          setTimeout(() => {
-            inputField.classList.remove('error_active');
-            errorField.innerHTML = '';
-            errorField.style.display = 'none';
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Perform another Faraday Magic';
-          }, 5000);
-        } else if (response.status == 201) {
+          errorField.style.display = 'none';
+          newSpan.classList.remove('loader');
+          buttonEl.disabled = false;
+          buttonEl.innerHTML = 'Try again';
+        } 
+        
+        else if (response.status == 400) {
+          errorSV.style.display = 'block';
+          errorSV.innerHTML = "Something went wrong, please contact admin"
+          errorField.style.display = 'none';
+          newSpan.classList.remove('loader');
+          buttonEl.disabled = false;
+          buttonEl.innerHTML = 'Try again';
+        } 
+        
+        else if (response.status == 201) {
 
           // Storing data in form of JSON
           var returned_data = await response.json();
