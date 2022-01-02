@@ -82,7 +82,6 @@ FormButton.addEventListener('click', e => {
   
             // Storing data in form of JSON
             var returned_data = await response.json();
-            console.log(returned_data);
   
             // inputField.value = '';
             successField.style.display = 'block'
@@ -154,4 +153,86 @@ FormButton.addEventListener('click', e => {
       }
     }
   };
+
+
+// // get the text from the DOM Element: 
+// const textToCopy = document.querySelector('.copy-text').innerText
+
+// // when someone clicks on the <a class="copy-text"> element 
+// // (which should be a <button>), execute the copy command:
+// document.querySelector('.copy-button').addEventListener('click' , e => {
+//   e.preventDefault();
+//   navigator.clipboard.writeText(textToCopy).then(
+//     function() {
+//       /* clipboard successfully set */
+//       window.alert('Success! The text was copied to your clipboard') 
+//     }, 
+//     function() {
+//       /* clipboard write failed */
+//       window.alert('Opps! Your browser does not support the Clipboard API')
+//     }
+//   )
+// })
+
+document.querySelector(".copy-button").addEventListener("click", e => {
+  e.preventDefault();
+    copyToClipboard(document.querySelector(".copy-text"));
+});
+
+function copyToClipboard(elem) {
+  const copybutton = document.querySelector('.copy-button');
+
+    // create hidden text element, if it doesn't already exist
+  var targetId = "_hiddenCopyText_";
+  var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+  var origSelectionStart, origSelectionEnd;
+  if (isInput) {
+      // can just use the original source element for the selection and copy
+      target = elem;
+      origSelectionStart = elem.selectionStart;
+      origSelectionEnd = elem.selectionEnd;
+  } else {
+      // must use a temporary form element for the selection and copy
+      target = document.getElementById(targetId);
+      if (!target) {
+          var target = document.createElement("textarea");
+          target.style.position = "absolute";
+          target.style.left = "-9999px";
+          target.style.top = "0";
+          target.id = targetId;
+          document.body.appendChild(target);
+      }
+      target.textContent = elem.textContent;
+  }
+  // select the content
+  var currentFocus = document.activeElement;
+  target.focus();
+  target.setSelectionRange(0, target.value.length);
   
+  // copy the selection
+  var succeed;
+  try {
+        succeed = document.execCommand("copy");
+  } catch(e) {
+      succeed = false;
+  }
+  // restore original focus
+  if (currentFocus && typeof currentFocus.focus === "function") {
+      currentFocus.focus();
+  }
+  
+  if (isInput) {
+      // restore prior selection
+      elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+  } else {
+      // clear temporary content
+      target.textContent = "";
+  }
+  copybutton.innerHTML = 'Copied'
+  setTimeout(() => {
+    copybutton.innerHTML = 'Copy'
+  }, 3000);
+
+  return succeed;
+
+}
