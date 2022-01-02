@@ -33,18 +33,6 @@ FormButton.addEventListener('click', e => {
         errorField.style.display = 'none';
       }, 3000);
     } else {
-
-      if ( aliasInput.value == null ) {
-        _data = {
-          original_url: inputField.value,
-        }
-        
-      } else if ( aliasInput.value != " " ) {
-         _data = {
-          original_url: inputField.value,
-          short_url: aliasInput.value,
-        }
-      }
       
       try {
         errorSV.style.display = 'none';
@@ -59,53 +47,105 @@ FormButton.addEventListener('click', e => {
         buttonEl.appendChild(newSpan);
 
 
-        const response = await fetch(
-          'https://frda.me/api/shorten',
-          {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({original_url : inputField.value, short_url : aliasInput}),
+        if ( !aliasInput.value ) {
+        
+          const response = await fetch(
+            'https://frda.me/api/shorten',
+            {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({original_url : inputField.value}),
+            }
+          );
+
+          if (response.status == 500) {
+            errorSV.style.display = 'block';
+            errorField.style.display = 'none';
+            newSpan.classList.remove('loader');
+            buttonEl.disabled = false;
+            buttonEl.innerHTML = 'Try again';
+          } 
+          
+          else if (response.status == 400) {
+            errorSV.style.display = 'block';
+            errorSV.innerHTML = "Something went wrong, please contact admin"
+            errorField.style.display = 'none';
+            newSpan.classList.remove('loader');
+            buttonEl.disabled = false;
+            buttonEl.innerHTML = 'Try again';
+          } 
+          
+          else if (response.status == 201) {
+  
+            // Storing data in form of JSON
+            var returned_data = await response.json();
+            console.log(returned_data);
+  
+            // inputField.value = '';
+            successField.style.display = 'block'
+            let r_link = returned_data.short_url
+            let result = $('#success_isActiveText a');
+            full_url = base_url + r_link
+            result.attr('href', full_url)
+            result.text(full_url)
+            newSpan.classList.remove('loader');
+            buttonEl.disabled = false;
+            buttonEl.innerHTML = 'Perform another Faraday Magic';
           }
-        );
+          
+        } else {
+  
+          const response = await fetch(
+            'https://frda.me/api/shorten',
+            {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({original_url : inputField.value, short_url : aliasInput.value}),
+            }
+          );
 
-
-        if (response.status == 500) {
-          errorSV.style.display = 'block';
-          errorField.style.display = 'none';
-          newSpan.classList.remove('loader');
-          buttonEl.disabled = false;
-          buttonEl.innerHTML = 'Try again';
-        } 
-        
-        else if (response.status == 400) {
-          errorSV.style.display = 'block';
-          errorSV.innerHTML = "Something went wrong, please contact admin"
-          errorField.style.display = 'none';
-          newSpan.classList.remove('loader');
-          buttonEl.disabled = false;
-          buttonEl.innerHTML = 'Try again';
-        } 
-        
-        else if (response.status == 201) {
-
-          // Storing data in form of JSON
-          var returned_data = await response.json();
-          console.log(returned_data);
-
-          // inputField.value = '';
-          successField.style.display = 'block'
-          let r_link = returned_data.short_url
-          let result = $('#success_isActiveText a');
-          full_url = base_url + r_link
-          result.attr('href', full_url)
-          result.text(full_url)
-          newSpan.classList.remove('loader');
-          buttonEl.disabled = false;
-          buttonEl.innerHTML = 'Perform another Faraday Magic';
+          if (response.status == 500) {
+            errorSV.style.display = 'block';
+            errorField.style.display = 'none';
+            newSpan.classList.remove('loader');
+            buttonEl.disabled = false;
+            buttonEl.innerHTML = 'Try again';
+          } 
+          
+          else if (response.status == 400) {
+            errorSV.style.display = 'block';
+            errorSV.innerHTML = "Something went wrong, please contact admin"
+            errorField.style.display = 'none';
+            newSpan.classList.remove('loader');
+            buttonEl.disabled = false;
+            buttonEl.innerHTML = 'Try again';
+          } 
+          
+          else if (response.status == 201) {
+  
+            // Storing data in form of JSON
+            var returned_data = await response.json();
+  
+            // inputField.value = '';
+            successField.style.display = 'block'
+            let r_link = returned_data.short_url
+            let result = $('#success_isActiveText a');
+            full_url = base_url + r_link
+            result.attr('href', full_url)
+            result.text(full_url)
+            newSpan.classList.remove('loader');
+            buttonEl.disabled = false;
+            buttonEl.innerHTML = 'Perform another Faraday Magic';
+          }
+  
         }
+
       } catch (e) {
         console.log(e)
         buttonEl.innerHTML = 'Request Access';
