@@ -8,7 +8,7 @@ If you've never made an open source contribution before or you are wondering how
 1.  Fork the repository  to your account. This means that you will have a copy of the repository under your-GitHub-username/repository-name.
 1. Clone the repository to your local machine using by copying the link provided under `HTTPS` when you click on the green button labelled `code` on the repository page.
 1. Create a new branch for your fix using `git checkout -b branch-name-here`.
-1. Setup the project in your local by following the steps listed in the [readme](https://github.com/faradayafrica/Faraday-event/readme.md) file
+1. Setup the project in your local by following the steps listed in the [readme](https://github.com/faradayafrica/Url-Shortener-Frontend/readme.md) file
 1. Open the project in a code editor and begin working on it.
 3. Use `git add .` to add the contents of the changed files to the "snapshot" git uses to manage the state of the project, also known as the index.
 4. Use `git commit -m "Insert a short message of the changes made here"` to store the contents of the index with a descriptive message.
