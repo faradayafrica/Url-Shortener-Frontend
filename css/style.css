@@ -83,27 +83,29 @@ body {
 }
 
 
+.dark{
+  background-color: #333B47;
+  
+
+}
 
 
+#mode-btn{
+   background-color:#E3E7F4;
+   border: #606773;
+   margin:20px 0 0 10px;
+   border:10px solid #606773;
+   border-radius: 20px;
 
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#mode-btn:focus{
+  outline: none;
+}
+#btn{
+  width: 2vw;
+  height: 2vw;
+}
 
 
 
