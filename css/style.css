@@ -26,7 +26,7 @@ body {
 }
 
 .top-header {
-    margin-top: 10%;
+    margin-top: 7%;
 }
 
 .top-header h1 {
@@ -93,7 +93,7 @@ body {
 #mode-btn{
    background-color:#E3E7F4;
    border: #606773;
-   margin:20px 0 0 10px;
+   margin:16px 0 0 10px;
    border:10px solid #606773;
    border-radius: 20px;
 
