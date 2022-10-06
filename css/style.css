@@ -103,8 +103,9 @@ body {
   outline: none;
 }
 #btn{
-  width: 2vw;
-  height: 2vw;
+  width: 2.7vw;
+  height: 2.4vw;
+  padding-top: .3rem;
 }
 
 
