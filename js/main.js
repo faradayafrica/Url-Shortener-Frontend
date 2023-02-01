@@ -55,7 +55,7 @@ FormButton.addEventListener('click', e => {
               method: 'POST',
               mode: 'cors',
               headers: {
-                "accept": "application/json",
+                'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin":"*",
                 "Access-Control-Allow-Methods":"*",
                 "Access-Control-Allow-Headers":"*"
@@ -106,7 +106,7 @@ FormButton.addEventListener('click', e => {
               method: 'POST',
               mode: 'cors',
               headers: {
-                "accept": "application/json",
+                'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin":"*",
                 "Access-Control-Allow-Methods":"*",
                 "Access-Control-Allow-Headers":"*"
