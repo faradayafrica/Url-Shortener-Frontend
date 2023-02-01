@@ -50,12 +50,15 @@ FormButton.addEventListener('click', e => {
         if ( !aliasInput.value ) {
         
           const response = await fetch(
-            'https://frda.me/api/shorten',
+            'https://frda.me/api/shorten/',
             {
               method: 'POST',
               mode: 'cors',
               headers: {
-                'Content-Type': 'application/json',
+                "accept": "application/json",
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
               },
               body: JSON.stringify({original_url : inputField.value}),
             }
@@ -92,18 +95,21 @@ FormButton.addEventListener('click', e => {
             result.text(full_url)
             newSpan.classList.remove('loader');
             buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Perform another Faraday Magic';
+            buttonEl.innerHTML = 'Create another magic link';
           }
           
         } else {
   
           const response = await fetch(
-            'https://frda.me/api/shorten',
+            'https://frda.me/api/shorten/',
             {
               method: 'POST',
               mode: 'cors',
               headers: {
-                'Content-Type': 'application/json',
+                "accept": "application/json",
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Methods":"*",
+                "Access-Control-Allow-Headers":"*"
               },
               body: JSON.stringify({original_url : inputField.value, short_url : aliasInput.value}),
             }
@@ -140,14 +146,14 @@ FormButton.addEventListener('click', e => {
             result.text(full_url)
             newSpan.classList.remove('loader');
             buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Perform another Faraday Magic';
+            buttonEl.innerHTML = 'Create another magic link';
           }
   
         }
 
       } catch (e) {
         console.log(e)
-        buttonEl.innerHTML = 'Request Access';
+        buttonEl.innerHTML = 'Something went wrong, please try again';
         buttonEl.disabled = false;
         errorField.innerHTML = 'Something went wrong, please try again';
       }
