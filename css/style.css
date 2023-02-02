@@ -107,7 +107,14 @@ body {
   height: 2vw;
 }
 
+#togglestyle{
+  position: absolute;
+  left: 0px;
+}
 
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: var(--brand);
+}
 
 
 
