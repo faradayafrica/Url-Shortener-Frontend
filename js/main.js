@@ -8,12 +8,22 @@ FormButton.addEventListener('click', e => {
     const errorSV = document.querySelector('.server_error_isActiveText')
     const errorUl = document.querySelector('.url_error_isActiveText');
     const success = document.querySelector('.success_isActiveText');
-    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success);
+    const checktoggle = document.querySelector('#checkboxtoggle');
+    const toggletext = document.querySelector('#toggletext');
+    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success, checktoggle, toggletext);
   });
 
-  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField) => {
+  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField, checkInput, toggletext) => {
     const re = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
     const base_url = "https://frda.me/"
+    if (checkInput.checked) {
+      var checkInputValue = 1
+      var toggletextvalue = toggletext.value
+    } else {
+      var checkInputValue = 0
+      var toggletextvalue = ""
+    }
+
     if (inputField.value.length == 0) {
       inputField.classList.add('error_active');
       errorField.innerHTML = 'Provide a link';
@@ -60,7 +70,7 @@ FormButton.addEventListener('click', e => {
                 "Access-Control-Allow-Methods":"*",
                 "Access-Control-Allow-Headers":"*"
               },
-              body: JSON.stringify({original_url : inputField.value}),
+              body: JSON.stringify({original_url : inputField.value, redirect : checkInputValue, page_info : toggletextvalue}),
             }
           );
 
@@ -111,7 +121,7 @@ FormButton.addEventListener('click', e => {
                 "Access-Control-Allow-Methods":"*",
                 "Access-Control-Allow-Headers":"*"
               },
-              body: JSON.stringify({original_url : inputField.value, short_url : aliasInput.value}),
+              body: JSON.stringify({original_url : inputField.value, short_url : aliasInput.value, redirect : checkInputValue, page_info : toggletextvalue}),
             }
           );
 
