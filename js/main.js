@@ -252,3 +252,12 @@ function copyToClipboard(elem) {
   return succeed;
 
 }
+
+// Dynamic date for copyright section - Updates the year
+// automatically once we enter a new year.
+
+document.getElementById("date");
+
+let currentDate = new Date();
+let year = currentDate.getFullYear();
+date.innerHTML = year;
