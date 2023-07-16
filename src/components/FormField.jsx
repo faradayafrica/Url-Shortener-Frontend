@@ -117,6 +117,11 @@ const FormField = ({ dark }) => {
     }
   };
 
+  const handleCheck = () =>{
+    setRedirect(!redirect);
+    setCheckValue(1)
+  }
+
 
   return (
     <>
@@ -162,7 +167,7 @@ const FormField = ({ dark }) => {
               className=" w-7 mr-4 rounded-lg accent-[#05b851]"
               type="checkbox"
               id="toggleBox"
-              onChange={() => setRedirect(!redirect)}
+              onChange={handleCheck}
             />
             <label className={dark ? "text-white" : ""} htmlFor="toggleBox">
               Add Redirect <span>(Takes longer)</span>

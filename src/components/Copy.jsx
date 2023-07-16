@@ -6,6 +6,10 @@ const Copy = ({url}) => {
     e.preventDefault();
     navigator.clipboard.writeText(url)
     setIsCopied(true)
+
+    setTimeout(()=>{
+      setIsCopied(false)
+    },2000)
   };
   return (
     <button className="bg-[#2a2e32] px-5 py-2 mt-3 text-center m-auto text-white"

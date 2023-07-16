@@ -11,7 +11,7 @@ function App() {
     setDark(() => !dark)
   }
   return (
-    <div className={dark ? " bg-[#2a2e32] h-screen" : " bg-[#333B47] h-screen"}>
+    <div className={dark ? " bg-[#2a2e32] h-[100vh]" : " bg-[#333B47] h-[100vh]"}>
       <Bulb onMode={handleMode} dark={dark}/>
       <div className="App flex flex-col justify-center items-center mt-3 ">
         <Header />
