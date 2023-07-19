@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Link shortener for Faraday Africa">
+
+    <title>Faraday | Link shortener</title>
+
+    <meta property="og:title" content="Faraday | Link Shortener" />
+    <meta property="og:description" content="Link Shortener for Faraday internal use." />
+    <meta property="og:image" content="https://camo.githubusercontent.com/41760185905587b5834025a8239aa1bed78075991d2479c8535c1f427c01127f/68747470733a2f2f656e637279707465642d74626e302e677374617469632e636f6d2f696d616765733f713d74626e3a414e6439476353324c5a3076425632547635444b55785f68325a4e6d4f554b624155614f4d785442655126757371703d434155" />
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Bootstrap Toggle CSS-->
+    <link rel="stylesheet" href="css/bootstrap4-toggle.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="fa/css/all.min.css">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+
+    <!--Bulb icon-->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</head>
+
+<body>
+    <div>
+        <button id= "mode-btn" onclick="mode()">
+            <ion-icon id="btn" name="bulb"></ion-icon>
+        </button>
+
+    </div>
+
+    <section class="top-header">
+
+        <div class="container-fluid ">
+            <div class="row align-items-center">
+                <div class="col-lg-12 col-md-10 col-sm-12 order-2 order-lg-1">
+                    <div class="form-group">
+
+                        <h1 style="text-align: center; color: white;">Faraday Link Shortener</h1>
+                        <p style="text-align: center; color: white;">Short and wicked fast link shortener</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Form -->
+    <section id="newsletter" class="newsletter">
+
+        <div class="container-fluid ">
+            <div class="row align-items-center">
+                <div class="form-holder col-lg-12 col-md-10 col-sm-12 order-2 order-lg-1">
+                    <form class="newsletterForm">
+
+                        <div class="form-group">
+
+                            <input type="text" name="email" id="email"
+                                placeholder="Original link (https://google.com/search?=what+is+a+link+shortener)">
+                            <div class="error_isActiveText" style="display: none;"></div>
+
+                            <input id="alias" class="alias" type="text" name="name"
+                                placeholder="Optional unique name (https://frda.me/unique-name)">
+                            <div class="url_error_isActiveText" style="display: none;"></div>
+
+                            <input id="toggletext" type="text" style="display: none;"
+                                placeholder="(Optional) Give information about this link e.g This link redirects you to Faraday Landing page">
+
+                            <div id="togglestyle" class="custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" name="checkbox" id="checkboxtoggle" value="True">
+                                <label class="custom-control-label" for="checkboxtoggle">Add Redirect<small>(Takes longer)</small></label>
+                            </div>
+
+                            <br>
+
+                            <button id="submitButton" class="btn btn-success submitbutton submit">Perform Faraday
+                                Magic</button>
+
+                            <div class="server_error_isActiveText" style="display: none;">Server Internal error, please
+                                contact <a style="color:#2A2E32; font-weight: bold;"
+                                    href="mailto:admin@faraday.africa">admin</a> and try again later</div>
+                            <div id="success_isActiveText" class="success_isActiveText" style="display: none;"><a
+                                    class="copy-text" target="_BLANK" href="">hhhhhh</a><br><button
+                                    class="btn btn-dark copy-button">Copy</button></div>
+
+
+                        </div>
+
+                </div>
+
+                </form>
+            </div>
+        </div>
+        </div>
+
+    </section>
+
+    <section class="footer">
+        <div class="col-md-12 text-white" style="text-align: center; font-size: 12px;">
+            <p>Faraday <span id="date"></span>. All Rights Reserved</p>
+        </div>
+    </section>
+
+    <script src="js/main.js"></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/mode.js"></script>
+    <script src="js/bootstrap4-toggle.min.js"></script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var checkbox = document.querySelector("#checkboxtoggle");
+            var checkedtextbox = document.querySelector('#toggletext');
+
+              if (checkbox.checked) {
+                checkedtextbox.style.display = 'block'
+              } else {
+                checkedtextbox.style.display = 'none'
+              }
+    
+            checkbox.addEventListener('change', function() {
+              if (checkbox.checked) {
+                checkedtextbox.style.display = 'block'
+              } else {
+                checkedtextbox.style.display = 'none'
+              }
+            });
+        });
+
+    </script>
+
+</body>
+</html>
