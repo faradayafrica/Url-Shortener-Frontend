@@ -8,21 +8,17 @@ FormButton.addEventListener('click', e => {
     const errorSV = document.querySelector('.server_error_isActiveText')
     const errorUl = document.querySelector('.url_error_isActiveText');
     const success = document.querySelector('.success_isActiveText');
-    const checktoggle = document.querySelector('#checkboxtoggle');
-    const toggletext = document.querySelector('#toggletext');
-    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success, checktoggle, toggletext);
+    const redirectcheck = document.querySelector('#checkboxtoggle');
+    const metacheck = document.querySelector('#metaboxtoggle');
+    const metadesc = document.querySelector('#togglemetadesc');
+    const metatitle = document.querySelector('#togglemetatitle');
+    const metafile = document.querySelector('#togglemetafile');
+    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success, redirectcheck, metacheck, metadesc, metatitle, metafile);
   });
 
-  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField, checkInput, toggletext) => {
+  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField, redirectcheck, metacheck, metadesc, metatitle, metafile) => {
     const re = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-    const base_url = "https://frda.me/"
-    if (checkInput.checked) {
-      var checkInputValue = 1
-      var toggletextvalue = toggletext.value
-    } else {
-      var checkInputValue = 0
-      var toggletextvalue = ""
-    }
+    const base_url = "http://127.0.0.1:8000/"
 
     if (inputField.value.length == 0) {
       inputField.classList.add('error_active');
@@ -33,162 +29,190 @@ FormButton.addEventListener('click', e => {
         errorField.innerHTML = '';
         errorField.style.display = 'none';
       }, 3000); 
+      return;
     } else if (re.test(String(inputField.value).toLowerCase()) !== true) {
       inputField.classList.add('error_active');
-      errorField.innerHTML = "Please provide a valid url";
+      errorField.innerHTML = "Please provide a valid url (include https://)";
       errorField.style.display = 'block';
       setTimeout(() => {
         inputField.classList.remove('error_active');
         errorField.innerHTML = '';
         errorField.style.display = 'none';
       }, 3000);
-    } else {
-      
-      try {
-        errorSV.style.display = 'none';
-        successField.style.display = 'none'
-        buttonEl.innerHTML = '';
-        buttonEl.style.display = 'flex';
-        buttonEl.style.justifyContent = 'center';
-        buttonEl.style.alignItems = 'center';
-        const newSpan = document.createElement('div');
-        buttonEl.disabled = true;
-        newSpan.classList.add('loader');
-        buttonEl.appendChild(newSpan);
+      return;
 
-
-        if ( !aliasInput.value ) {
-        
-          const response = await fetch(
-            'https://frda.me/api/shorten/',
-            {
-              method: 'POST',
-              mode: 'cors',
-              headers: {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin":"*",
-                "Access-Control-Allow-Methods":"*",
-                "Access-Control-Allow-Headers":"*"
-              },
-              body: JSON.stringify({original_url : inputField.value, redirect : checkInputValue, page_info : toggletextvalue}),
-            }
-          );
-
-          if (response.status == 500) {
-            errorSV.style.display = 'block';
-            errorField.style.display = 'none';
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Try again';
-          } 
-          
-          else if (response.status == 400) {
-            errorSV.style.display = 'block';
-            errorSV.innerHTML = "Something went wrong, please contact admin"
-            errorField.style.display = 'none';
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Try again';
-          } 
-          
-          else if (response.status == 201) {
-  
-            // Storing data in form of JSON
-            var returned_data = await response.json();
-  
-            // inputField.value = '';
-            successField.style.display = 'block'
-            let r_link = returned_data.short_url
-            let result = $('#success_isActiveText a');
-            full_url = base_url + r_link
-            result.attr('href', full_url)
-            result.text(full_url)
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Create another magic link';
-          }
-          
-        } else {
-  
-          const response = await fetch(
-            'https://frda.me/api/shorten/',
-            {
-              method: 'POST',
-              mode: 'cors',
-              headers: {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Origin":"*",
-                "Access-Control-Allow-Methods":"*",
-                "Access-Control-Allow-Headers":"*"
-              },
-              body: JSON.stringify({original_url : inputField.value, short_url : aliasInput.value, redirect : checkInputValue, page_info : toggletextvalue}),
-            }
-          );
-
-          if (response.status == 500) {
-            errorSV.style.display = 'block';
-            errorField.style.display = 'none';
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Try again';
-          } 
-          
-          else if (response.status == 400) {
-            errorSV.style.display = 'block';
-            errorSV.innerHTML = "Something went wrong, please contact admin"
-            errorField.style.display = 'none';
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Try again';
-          } 
-          
-          else if (response.status == 201) {
-  
-            // Storing data in form of JSON
-            var returned_data = await response.json();
-  
-            // inputField.value = '';
-            successField.style.display = 'block'
-            let r_link = returned_data.short_url
-            let result = $('#success_isActiveText a');
-            full_url = base_url + r_link
-            result.attr('href', full_url)
-            result.text(full_url)
-            newSpan.classList.remove('loader');
-            buttonEl.disabled = false;
-            buttonEl.innerHTML = 'Create another magic link';
-          }
-  
-        }
-
-      } catch (e) {
-        console.log(e)
-        buttonEl.innerHTML = 'Something went wrong, please try again';
-        buttonEl.disabled = false;
-        errorField.innerHTML = 'Something went wrong, please try again';
-      }
     }
+
+    if (redirectcheck.checked) {
+      var checkInputValue = 1
+    } else {
+      var checkInputValue = 0
+    }
+
+    if (metacheck.checked) {
+
+      var metacheckvalue = 1
+      var metadescvalue = metadesc.value
+      var metatitlevalue = metatitle.value
+      var metaimagefile =  metafile.files[0]
+      var metaimagefileBase64 = ""
+      var reader = new FileReader();
+    
+
+      if (metadesc.value.length == 0) {
+        metadesc.classList.add('error_active')
+        setTimeout(() => {
+          metadesc.classList.remove('error_active');
+        }, 3000); 
+        return;
+      } else if (metatitle.value.length == 0) {
+        metatitle.classList.add('error_active')
+        setTimeout(() => {
+          metatitle.classList.remove('error_active');
+        }, 3000); 
+        return;
+      }
+    
+      reader.onloadend = function () {
+        
+        var metaimagefileBase64 = reader.result;
+
+        try {
+          handleAPICall(
+            buttonEl,
+            inputField,
+            aliasInput,
+            checkInputValue,
+            metacheckvalue,
+            metadescvalue,
+            metatitlevalue,
+            metaimagefileBase64,
+            successField,
+            errorSV,
+            errorField,
+            base_url
+          );
+        } catch (error) {
+          console.error(error);
+        }
+        
+      };
+  
+      reader.readAsDataURL(metaimagefile);
+      return;
+
+    }
+
+    try {
+      handleAPICall(
+        buttonEl,
+        inputField,
+        aliasInput,
+        checkInputValue,
+        metacheckvalue,
+        metadescvalue,
+        metatitlevalue,
+        metaimagefileBase64,
+        successField,
+        errorSV,
+        errorField,
+        base_url
+      );
+    } catch (error) {
+      console.error(error);
+    }
+
   };
 
+  async function handleAPICall(
+  buttonEl,
+  inputField,
+  aliasInput,
+  checkInputValue,
+  metacheckvalue,
+  metadescvalue,
+  metatitlevalue,
+  metaimagefileBase64,
+  successField,
+  errorSV,
+  errorField,
+  base_url
+) {
 
-// // get the text from the DOM Element: 
-// const textToCopy = document.querySelector('.copy-text').innerText
+  const newSpan = document.createElement('div');
 
-// // when someone clicks on the <a class="copy-text"> element 
-// // (which should be a <button>), execute the copy command:
-// document.querySelector('.copy-button').addEventListener('click' , e => {
-//   e.preventDefault();
-//   navigator.clipboard.writeText(textToCopy).then(
-//     function() {
-//       /* clipboard successfully set */
-//       window.alert('Success! The text was copied to your clipboard') 
-//     }, 
-//     function() {
-//       /* clipboard write failed */
-//       window.alert('Opps! Your browser does not support the Clipboard API')
-//     }
-//   )
-// })
+  errorSV.style.display = 'none';
+  successField.style.display = 'none'
+  buttonEl.innerHTML = '';
+  buttonEl.style.display = 'flex';
+  buttonEl.style.justifyContent = 'center';
+  buttonEl.style.alignItems = 'center';
+  buttonEl.disabled = true;
+  newSpan.classList.add('loader');
+  buttonEl.appendChild(newSpan);
+
+  const apiUrl = `${base_url}api/shorten/`;
+  
+  const response = await fetch(
+    apiUrl,
+    {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin":"*",
+        "Access-Control-Allow-Methods":"*",
+        "Access-Control-Allow-Headers":"*"
+      },
+      body: JSON.stringify(
+        {
+          original_url : inputField.value, 
+          short_url : aliasInput.value,
+          redirect : checkInputValue, 
+          meta_check : metacheckvalue,
+          meta_desc : metadescvalue,
+          meta_title : metatitlevalue,
+          meta_image : metaimagefileBase64,
+        }
+      ),
+    }
+  );
+
+  if (response.status == 500) {
+    errorSV.style.display = 'block';
+    errorField.style.display = 'none';
+    newSpan.classList.remove('loader');
+    buttonEl.disabled = false;
+    buttonEl.innerHTML = 'Try again';
+  } 
+  
+  else if (response.status == 400) {
+    errorSV.style.display = 'block';
+    errorSV.innerHTML = "Something went wrong, please contact admin"
+    errorField.style.display = 'none';
+    newSpan.classList.remove('loader');
+    buttonEl.disabled = false;
+    buttonEl.innerHTML = 'Try again';
+  } 
+  
+  else if (response.status == 201) {
+
+    // Storing data in form of JSON
+    var returned_data = await response.json();
+
+    // inputField.value = '';
+    successField.style.display = 'block'
+    let r_link = returned_data.short_url
+    let result = $('#success_isActiveText a');
+    full_url = base_url + r_link
+    result.attr('href', full_url)
+    result.text(full_url)
+    newSpan.classList.remove('loader');
+    buttonEl.disabled = false;
+    buttonEl.innerHTML = 'Create another magic link';
+  }
+}
+
 
 document.querySelector(".copy-button").addEventListener("click", e => {
   e.preventDefault();

@@ -21,7 +21,7 @@ body {
     padding: 0;
     background-color: #2a2e32;
     display: flex;
-    height: 100vh;
+    height: auto;
     flex-direction: column;
 }
 
@@ -107,7 +107,7 @@ body {
   height: 2vw;
 }
 
-#togglestyle{
+.togglestyle{
   position: absolute;
   left: 0px;
 }

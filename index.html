@@ -74,25 +74,46 @@
                                 placeholder="Optional unique name (https://frda.me/unique-name)">
                             <div class="url_error_isActiveText" style="display: none;"></div>
 
-                            <input id="toggletext" type="text" style="display: none;"
-                                placeholder="(Optional) Give information about this link e.g This link redirects you to Faraday Landing page">
-
-                            <div id="togglestyle" class="custom-control custom-checkbox">
+                            <div id="checkboxtogglediv" class="togglestyle custom-control custom-checkbox">
                                 <input class="custom-control-input" type="checkbox" name="checkbox" id="checkboxtoggle" value="True">
                                 <label class="custom-control-label" for="checkboxtoggle">Add Redirect<small>(Takes longer)</small></label>
+                            </div>
+
+                            <br><br>
+
+                            <div id="metaboxtogglediv" class="togglestyle custom-control custom-checkbox">
+                                <input class="custom-control-input" type="checkbox" name="metabox" id="metaboxtoggle" value="False">
+                                <label class="custom-control-label" for="metaboxtoggle">Customise Metadata</label>
+                            </div>
+
+                            <div id="togglemetainputdiv" style="display: none;">
+
+                                <br><br>
+
+                                <input id="togglemetatitle" type="text" placeholder="Give information about the Title of this link e.g Faraday Redirect Page">
+
+                                <input id="togglemetadesc" type="text" placeholder="Give information about the description of this link e.g This link redirects you to Faraday Landing page">
+
+                                <input id="togglemetafile" type="file">
+
                             </div>
 
                             <br>
 
                             <button id="submitButton" class="btn btn-success submitbutton submit">Perform Faraday
-                                Magic</button>
+                                Magic
+                            </button>
 
-                            <div class="server_error_isActiveText" style="display: none;">Server Internal error, please
-                                contact <a style="color:#2A2E32; font-weight: bold;"
-                                    href="mailto:admin@faraday.africa">admin</a> and try again later</div>
-                            <div id="success_isActiveText" class="success_isActiveText" style="display: none;"><a
-                                    class="copy-text" target="_BLANK" href="">hhhhhh</a><br><button
-                                    class="btn btn-dark copy-button">Copy</button></div>
+                            <div class="server_error_isActiveText" style="display: none;">
+                                Server Internal error, please contact 
+                                <a style="color:#2A2E32; font-weight: bold;" href="mailto:admin@faraday.africa">admin</a> and try again later
+                            </div>
+
+                            <div id="success_isActiveText" class="success_isActiveText" style="display: none;">
+                                <a class="copy-text" target="_BLANK" href="">hhhhhh</a>
+                                <br>
+                                <button class="btn btn-dark copy-button">Copy</button>
+                            </div>
 
 
                         </div>
@@ -119,27 +140,26 @@
     <script src="js/bootstrap4-toggle.min.js"></script>
 
     <script>
-
         document.addEventListener("DOMContentLoaded", function (event) {
-            var checkbox = document.querySelector("#checkboxtoggle");
-            var checkedtextbox = document.querySelector('#toggletext');
-
-              if (checkbox.checked) {
-                checkedtextbox.style.display = 'block'
-              } else {
-                checkedtextbox.style.display = 'none'
-              }
+            var metaboxtoggle = document.querySelector("#metaboxtoggle");
+            var metainputdiv = document.querySelector('#togglemetainputdiv');
     
-            checkbox.addEventListener('change', function() {
-              if (checkbox.checked) {
-                checkedtextbox.style.display = 'block'
-              } else {
-                checkedtextbox.style.display = 'none'
-              }
+            if (metaboxtoggle.checked) {
+                metainputdiv.style.display = 'block';
+            } else {
+                metainputdiv.style.display = 'none';
+            }
+    
+            metaboxtoggle.addEventListener('change', function () {
+                if (metaboxtoggle.checked) {
+                    metainputdiv.style.display = 'block';
+                } else {
+                    metainputdiv.style.display = 'none';
+                }
             });
         });
-
     </script>
+    
 
 </body>
 </html>
