@@ -18,7 +18,7 @@ FormButton.addEventListener('click', e => {
 
   const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField, redirectcheck, metacheck, metadesc, metatitle, metafile) => {
     const re = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
-    const base_url = "http://127.0.0.1:8000/"
+    const base_url = "https://frda.me/"
 
     if (inputField.value.length == 0) {
       inputField.classList.add('error_active');
