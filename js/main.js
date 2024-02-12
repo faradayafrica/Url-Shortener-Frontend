@@ -192,6 +192,7 @@ FormButton.addEventListener('click', e => {
           meta_desc : metadescvalue,
           meta_title : metatitlevalue,
           meta_image : metaimagefileBase64,
+          auth_code : authCode.value
         }
       ),
     }
@@ -221,6 +222,11 @@ FormButton.addEventListener('click', e => {
     newSpan.classList.remove('loader');
     buttonEl.disabled = false;
     buttonEl.innerHTML = 'Try again';
+    setTimeout(() => {
+      authCode.classList.remove('error_active');
+      authCodeError.innerHTML = '';
+      authCodeError.style.display = 'none';
+    }, 3000);
   }
   
   else if (response.status == 201) {
