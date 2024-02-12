@@ -13,10 +13,13 @@ FormButton.addEventListener('click', e => {
     const metadesc = document.querySelector('#togglemetadesc');
     const metatitle = document.querySelector('#togglemetatitle');
     const metafile = document.querySelector('#togglemetafile');
-    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success, redirectcheck, metacheck, metadesc, metatitle, metafile);
+    const authCode = document.querySelector('#authCode');
+    console.log("authCode", authCode.value)
+    const authCodeError = document.querySelector('.authCodeError');
+    validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success, redirectcheck, metacheck, metadesc, metatitle, metafile, authCode, authCodeError);
   });
 
-  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField, redirectcheck, metacheck, metadesc, metatitle, metafile) => {
+  const validate = async (buttonEl, aliasInput, inputField, errorField, errorSV, errorFieldAlias, successField, redirectcheck, metacheck, metadesc, metatitle, metafile, authCode, authCodeError) => {
     const re = /(?:https?):\/\/(\w+:?\w*)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
     const base_url = "https://frda.me/"
 
@@ -41,6 +44,18 @@ FormButton.addEventListener('click', e => {
       }, 3000);
       return;
 
+    }
+
+    if (authCode.value.length == 0) {
+      authCode.classList.add('error_active');
+      authCodeError.innerHTML = 'Provide an auth code';
+      authCodeError.style.display = 'block';
+      setTimeout(() => {
+        authCode.classList.remove('error_active');
+        authCodeError.innerHTML = '';
+        authCodeError.style.display = 'none';
+      }, 3000); 
+      return;
     }
 
     if (redirectcheck.checked) {
@@ -116,7 +131,9 @@ FormButton.addEventListener('click', e => {
         successField,
         errorSV,
         errorField,
-        base_url
+        base_url,
+        authCode,
+        authCodeError
       );
     } catch (error) {
       console.error(error);
@@ -136,7 +153,9 @@ FormButton.addEventListener('click', e => {
   successField,
   errorSV,
   errorField,
-  base_url
+  base_url,
+  authCode,
+  authCodeError
 ) {
 
   const newSpan = document.createElement('div');
@@ -188,12 +207,21 @@ FormButton.addEventListener('click', e => {
   
   else if (response.status == 400) {
     errorSV.style.display = 'block';
-    errorSV.innerHTML = "Something went wrong, please contact admin"
+    errorSV.innerHTML = "Something went wrong, please report this issue to us"
     errorField.style.display = 'none';
     newSpan.classList.remove('loader');
     buttonEl.disabled = false;
     buttonEl.innerHTML = 'Try again';
-  } 
+  }
+
+  else if (response.status == 401) {
+    authCode.classList.add('error_active');
+    authCodeError.innerHTML = 'Invalid auth code';
+    authCodeError.style.display = 'block';
+    newSpan.classList.remove('loader');
+    buttonEl.disabled = false;
+    buttonEl.innerHTML = 'Try again';
+  }
   
   else if (response.status == 201) {
 
