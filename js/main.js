@@ -14,7 +14,6 @@ FormButton.addEventListener('click', e => {
     const metatitle = document.querySelector('#togglemetatitle');
     const metafile = document.querySelector('#togglemetafile');
     const authCode = document.querySelector('#authCode');
-    console.log("authCode", authCode.value)
     const authCodeError = document.querySelector('.authCodeError');
     validate(FormButton, aliasInputField, textInput, errorEl, errorSV, errorUl, success, redirectcheck, metacheck, metadesc, metatitle, metafile, authCode, authCodeError);
   });
@@ -105,7 +104,9 @@ FormButton.addEventListener('click', e => {
             successField,
             errorSV,
             errorField,
-            base_url
+            base_url,
+            authCode,
+            authCodeError
           );
         } catch (error) {
           console.error(error);
